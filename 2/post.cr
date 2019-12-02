@@ -1,6 +1,6 @@
 #! /usr/bin/crystal
 
-data = File.read("input.txt")
+data = STDIN.gets_to_end
 
 (0..99).to_a.each do |a|
   (0..99).to_a.each do |b|

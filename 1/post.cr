@@ -9,7 +9,8 @@ def fuel(int)
   end
 end
 
-data = File.read("input.txt")
+data = STDIN.gets_to_end
+
 sum = 0
 data.each_line do |e|
   sum += fuel(e.to_i) - e.to_i

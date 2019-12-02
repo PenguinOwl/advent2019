@@ -1,6 +1,7 @@
 #! /usr/bin/crystal
 
-data = File.read("input.txt")
+data = STDIN.gets_to_end
+
 program = data.split(",").map{|e| e.to_i}
 pointer = 0
 
