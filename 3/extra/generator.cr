@@ -61,7 +61,7 @@ canvas = Canvas.new((min_x.abs+max_x+1), (min_y.abs+max_y+1))
 
 progress_max = locations.size
 progress = 0
-bg_color = RGBA.from_rgb_n(255, 255, 255, 8)
+bg_color = RGBA.from_rgb_n(0, 0, 0, 8)
 
 (0..(min_x.abs+max_x)).each do |x|
   (0..(min_y.abs+max_y)).each do |y|
@@ -74,12 +74,12 @@ puts locations.size
 locations.each do |k, v|
   number = v[0]
   case number
+  when 0
+    color = RGBA.from_rgb_n(155, 255, 155, 8)
   when 1
-    color = RGBA.from_rgb_n(0, 255, 0, 8)
-  when 2
-    color = RGBA.from_rgb_n(255, 0, 0, 8)
+    color = RGBA.from_rgb_n(155, 155, 255, 8)
   when -1
-    color = RGBA.from_rgb_n(0, 0, 255, 8)
+    color = RGBA.from_rgb_n(255, 0, 0, 8)
   else
     color = RGBA.from_rgb_n(0, 0, 0, 8)
   end
