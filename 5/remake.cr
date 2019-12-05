@@ -49,21 +49,13 @@ loop do
     p1 = resolve(1)
     p2 = resolve(2)
     p3 = program[pointer+3]
-    if p1 < p2
-      program[p3] = 1
-    else
-      program[p3] = 0
-    end
+    program[p3] = (p1 < p2) ? 1 : 0
     pointer += 4
   when 8
     p1 = resolve(1)
     p2 = resolve(2)
     p3 = program[pointer+3]
-    if p1 == p2
-      program[p3] = 1
-    else
-      program[p3] = 0
-    end
+    program[p3] = (p1 == p2) ? 1 : 0
     pointer += 4
   else
     puts "stuck on #{pointer} with instruction #{instruction}"
