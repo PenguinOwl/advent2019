@@ -1,7 +1,6 @@
 require "./rgba"
 
 module StumpyCore
-
   # A canvas is 2D array of `RGBA` pixels
   #
   # To create a canvas of size `400` x `200`
@@ -115,7 +114,6 @@ module StumpyCore
     def includes_pixel?(x, y)
       0 <= x && x < @width && 0 <= y && y < @height
     end
-
 
     # Iterate over each row of the canvas
     # (a `Slice(RGBA)` of size `@width`).

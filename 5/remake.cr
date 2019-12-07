@@ -2,7 +2,7 @@
 
 data = File.read("input.txt")
 
-program = data.split(",").map{|e| e.to_i}
+program = data.split(",").map { |e| e.to_i }
 pointer = 0
 
 macro resolve(x)
@@ -12,19 +12,19 @@ end
 loop do
   instruction = program[pointer].to_s.rjust(2, '0')
   opcode = instruction[-2..-1].to_i
-  modes = instruction[0..-2].reverse.split("").map{|e| e.to_i}
+  modes = instruction[0..-2].reverse.split("").map { |e| e.to_i }
   case opcode
   when 99
     break
   when 1
-    program[program[pointer+3]] = resolve(1) + resolve(2)
+    program[program[pointer + 3]] = resolve(1) + resolve(2)
     pointer += 4
   when 2
-    program[program[pointer+3]] = resolve(1) * resolve(2)
+    program[program[pointer + 3]] = resolve(1) * resolve(2)
     pointer += 4
   when 3
     print "Input: "
-    program[program[pointer+1]] = read_line.strip.to_i
+    program[program[pointer + 1]] = read_line.strip.to_i
     pointer += 2
   when 4
     puts resolve(1)
@@ -48,13 +48,13 @@ loop do
   when 7
     p1 = resolve(1)
     p2 = resolve(2)
-    p3 = program[pointer+3]
+    p3 = program[pointer + 3]
     program[p3] = (p1 < p2) ? 1 : 0
     pointer += 4
   when 8
     p1 = resolve(1)
     p2 = resolve(2)
-    p3 = program[pointer+3]
+    p3 = program[pointer + 3]
     program[p3] = (p1 == p2) ? 1 : 0
     pointer += 4
   else

@@ -7,7 +7,7 @@ data = STDIN.gets_to_end
 
 locations = { {0, 0} => {0, 0} }
 
-stuff = data.split("\n").map{|e|e.split(",")}
+stuff = data.split("\n").map { |e| e.split(",") }
 line_id = 0
 stuff.each do |line|
   pointer = {0, 0}
@@ -41,14 +41,14 @@ stuff.each do |line|
   line_id += 1
 end
 
-x_bounds = locations.to_a.sort{ |e1, e2|
+x_bounds = locations.to_a.sort { |e1, e2|
   e1[0][0] <=> e2[0][0]
 }
 
 min_x = x_bounds.first[0][0] - 3
 max_x = x_bounds.last[0][0] + 3
 
-y_bounds = locations.to_a.sort{ |e1, e2|
+y_bounds = locations.to_a.sort { |e1, e2|
   e1[0][1] <=> e2[0][1]
 }
 
@@ -57,14 +57,14 @@ max_y = y_bounds.last[0][1] + 3
 
 puts min_x, max_x, min_y, max_y
 
-canvas = Canvas.new((min_x.abs+max_x+1), (min_y.abs+max_y+1))
+canvas = Canvas.new((min_x.abs + max_x + 1), (min_y.abs + max_y + 1))
 
 progress_max = locations.size
 progress = 0
 bg_color = RGBA.from_rgb_n(0, 0, 0, 8)
 
-(0..(min_x.abs+max_x)).each do |x|
-  (0..(min_y.abs+max_y)).each do |y|
+(0..(min_x.abs + max_x)).each do |x|
+  (0..(min_y.abs + max_y)).each do |y|
     canvas[x, y] = bg_color
   end
 end

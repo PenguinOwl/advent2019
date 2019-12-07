@@ -21,7 +21,7 @@ range.each do |e|
   end
   next unless match
   puts e
-  next unless array.map{|e|e.to_i} == array.map{|e|e.to_i}.sort
+  next unless array.map { |e| e.to_i } == array.map { |e| e.to_i }.sort
   succ << e
 end
 

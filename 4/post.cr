@@ -21,8 +21,8 @@ range.each do |e|
   end
   next unless match
   puts e
-  next unless array.map{|e|e.to_i} == array.map{|e|e.to_i}.sort
-  next if array.tally.select{|k, v| v == 2}.empty?
+  next unless array.map { |e| e.to_i } == array.map { |e| e.to_i }.sort
+  next if array.tally.select { |k, v| v == 2 }.empty?
   succ << e
 end
 

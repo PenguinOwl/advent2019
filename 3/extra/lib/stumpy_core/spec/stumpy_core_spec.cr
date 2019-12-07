@@ -16,7 +16,7 @@ describe StumpyCore do
     describe "map_with_index" do
       it "works as expected" do
         canvas = Canvas.new(10, 10, RGBA::RED)
-        res = canvas.map_with_index {|p, x, y, i| i.even? ? RGBA::BLACK : RGBA::WHITE }
+        res = canvas.map_with_index { |p, x, y, i| i.even? ? RGBA::BLACK : RGBA::WHITE }
         canvas[0, 0].should eq(RGBA::RED)
         canvas[1, 0].should eq(RGBA::RED)
         canvas[0, 1].should eq(RGBA::RED)
@@ -29,7 +29,7 @@ describe StumpyCore do
     describe "map_with_index!" do
       it "works as expected" do
         canvas = Canvas.new(10, 10, RGBA::RED)
-        canvas.map_with_index! {|p, x, y, i| i.even? ? RGBA::BLACK : RGBA::WHITE }
+        canvas.map_with_index! { |p, x, y, i| i.even? ? RGBA::BLACK : RGBA::WHITE }
         canvas[0, 0].should eq(RGBA::BLACK)
         canvas[1, 0].should eq(RGBA::WHITE)
         canvas[0, 1].should eq(RGBA::BLACK)

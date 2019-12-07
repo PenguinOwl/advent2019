@@ -3,7 +3,7 @@ require "../intcode"
 
 data = STDIN.gets_to_end
 
-program = data.split(",").map{|e| e.to_i}
+program = data.split(",").map { |e| e.to_i }
 pointer = 0
 
 program[1] = 12

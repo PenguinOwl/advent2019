@@ -4,7 +4,7 @@ data = STDIN.gets_to_end
 
 locations = { {0, 0} => {0, 0} }
 
-stuff = data.split("\n").map{|e|e.split(",")}
+stuff = data.split("\n").map { |e| e.split(",") }
 line_id = 0
 stuff.each do |line|
   pointer = {0, 0}
@@ -38,7 +38,7 @@ stuff.each do |line|
   line_id += 1
 end
 
-answer = locations.to_a.select{|v| v[1][0] < 0}.sort{ |e1, e2|
+answer = locations.to_a.select { |v| v[1][0] < 0 }.sort { |e1, e2|
   e1[1][1] <=> e2[1][1]
 }[0]
 
