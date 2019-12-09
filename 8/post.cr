@@ -25,7 +25,11 @@ end
 
 final.each do |line|
   line.each do |numb|
-    print numb
+    unless numb == 0
+      print "█"
+    else
+      print " "
+    end
   end
   print "\n"
 end
