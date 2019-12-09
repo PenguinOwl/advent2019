@@ -1,7 +1,34 @@
 #! /usr/bin/crystal
 
+macro check(x)
+  case mode(modes, {{x}}); 
+  when 1
+    @pointer+{{x}}
+  when 2
+    @program[@pointer+{{x}}]+@relative_pos
+  else
+    @program[@pointer+{{x}}]
+  end
+end
+
 macro resolve(x)
-  (mode(modes, {{x}}) == 0 ? @program[@program[@pointer+{{x}}]] : @program[@pointer+{{x}}])
+  case mode(modes, {{x}}); 
+  when 1
+    while nil == @program[@pointer+{{x}}]?
+      @program << 0
+    end
+    @program[@pointer+{{x}}]
+  when 2
+    while nil == @program[@program[@pointer+{{x}}]+@relative_pos]?
+      @program << 0
+    end
+    @program[@program[@pointer+{{x}}]+@relative_pos]
+  else
+    while nil == @program[@program[@pointer+{{x}}]]?
+      @program << 0
+    end
+    @program[@program[@pointer+{{x}}]]
+  end
 end
 
 class Intcode
@@ -12,16 +39,18 @@ class Intcode
   property output_channel
   property last_out
   property exited
+  property relative_pos
 
-  @program : Array(Int32)
+  @program : Array(Int64)
 
-  def initialize(program : Array(Int32))
-    @pointer = 0
+  def initialize(program : Array(Int64))
+    @pointer = 0_i64
     @program = program.dup
-    @input_channel = Channel(Int32).new
-    @output_channel = Channel(Int32).new
-    @last_out = 0
+    @input_channel =  Channel(Int64).new
+    @output_channel = Channel(Int64).new
+    @last_out = 0_i64
     @exited = false
+    @relative_pos = 0_i64
   end
 
   def run
@@ -35,18 +64,18 @@ class Intcode
           @exited = true
           break
         when 1
-          @program[@program[@pointer + 3]] = resolve(1) + resolve(2)
+          resolve(3)
+          @program[check(3)] = resolve(1) + resolve(2)
           @pointer += 4
         when 2
-          @program[@program[@pointer + 3]] = resolve(1) * resolve(2)
+          resolve(3)
+          @program[check(3)] = resolve(1) * resolve(2)
           @pointer += 4
         when 3
-          # puts "Waiting on #{@input_channel} for #{@output_channel}"
-          @program[@program[@pointer + 1]] = @input_channel.receive
+          @program[check(1)] = @input_channel.receive.to_i64
           @pointer += 2
         when 4
           @last_out = resolve(1)
-          # puts "Passed #{@last_out}"
           @output_channel.send(resolve(1))
           @pointer += 2
         when 5
@@ -68,15 +97,19 @@ class Intcode
         when 7
           p1 = resolve(1)
           p2 = resolve(2)
-          p3 = @program[@pointer + 3]
-          @program[p3] = (p1 < p2) ? 1 : 0
+          p3 = check(3)
+          @program[p3] = (p1 < p2) ? 1_i64 : 0_i64
           @pointer += 4
         when 8
           p1 = resolve(1)
           p2 = resolve(2)
-          p3 = @program[@pointer + 3]
-          @program[p3] = (p1 == p2) ? 1 : 0
+          p3 = check(3)
+          @program[p3] = (p1 == p2) ? 1_i64 : 0_i64
           @pointer += 4
+        when 9
+          p1 = resolve(1)
+          @relative_pos += p1
+          @pointer += 2
         else
           puts "stuck on #{@pointer} with instruction #{instruction}"
         end
