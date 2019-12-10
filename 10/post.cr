@@ -2,7 +2,7 @@
 
 data = File.read("input.txt")
 
-array = data.split("\n").map{ |e| e.split("")}
+array = data.split("\n").map { |e| e.split("") }
 astriods = [] of Tuple(Int32, Int32)
 counts = {} of Tuple(Int32, Int32) => Int32
 
@@ -26,7 +26,7 @@ others.each do |i2|
   angles[{x//gcd, y//gcd}] << i2
 end
 
-polar = angles.map do |i, e| 
+polar = angles.map do |i, e|
   trig = Math.atan2(i[1], i[0])
   # if i[0] == 0
   #   trig = (i[1] > 0) ? (Math::PI / 2) : (3 * Math::PI / 2)
@@ -36,7 +36,7 @@ polar = angles.map do |i, e|
   {trig, e}
 end
 
-mapb = polar.to_a.sort_by{|e| e[0]}
+mapb = polar.to_a.sort_by { |e| e[0] }
 map = mapb.clone
 
 pointer = 0
@@ -44,10 +44,9 @@ count = 0
 
 until map.empty?
   pointer %= map.size
-  puts map[pointer]
   map[pointer][1].pop
   if count == 199
-    puts mapb.select{ |e| e[0] == map[pointer][0] }
+    puts mapb.select { |e| e[0] == map[pointer][0] }
     exit
   else
     count += 1

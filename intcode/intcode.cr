@@ -46,7 +46,7 @@ class Intcode
   def initialize(program : Array(Int64))
     @pointer = 0_i64
     @program = program.dup
-    @input_channel =  Channel(Int64).new
+    @input_channel = Channel(Int64).new
     @output_channel = Channel(Int64).new
     @last_out = 0_i64
     @exited = false
@@ -56,65 +56,70 @@ class Intcode
   def run
     spawn do
       loop do
-        instruction = @program[@pointer].to_s.rjust(2, '0')
-        opcode = instruction[-2..-1].to_i
-        modes = instruction[0..-2].reverse.split("").map { |e| e.to_i }
-        case opcode
-        when 99
-          @exited = true
-          break
-        when 1
-          resolve(3)
-          @program[check(3)] = resolve(1) + resolve(2)
-          @pointer += 4
-        when 2
-          resolve(3)
-          @program[check(3)] = resolve(1) * resolve(2)
-          @pointer += 4
-        when 3
-          @program[check(1)] = @input_channel.receive.to_i64
-          @pointer += 2
-        when 4
-          @last_out = resolve(1)
-          @output_channel.send(resolve(1))
-          @pointer += 2
-        when 5
-          p1 = resolve(1)
-          p2 = resolve(2)
-          if p1 != 0
-            @pointer = p2
-          else
-            @pointer += 3
-          end
-        when 6
-          p1 = resolve(1)
-          p2 = resolve(2)
-          if p1 == 0
-            @pointer = p2
-          else
-            @pointer += 3
-          end
-        when 7
-          p1 = resolve(1)
-          p2 = resolve(2)
-          p3 = check(3)
-          @program[p3] = (p1 < p2) ? 1_i64 : 0_i64
-          @pointer += 4
-        when 8
-          p1 = resolve(1)
-          p2 = resolve(2)
-          p3 = check(3)
-          @program[p3] = (p1 == p2) ? 1_i64 : 0_i64
-          @pointer += 4
-        when 9
-          p1 = resolve(1)
-          @relative_pos += p1
-          @pointer += 2
-        else
-          puts "stuck on #{@pointer} with instruction #{instruction}"
-        end
+        break if step
       end
     end
+  end
+
+  def step
+    instruction = @program[@pointer].to_s.rjust(2, '0')
+    opcode = instruction[-2..-1].to_i
+    modes = instruction[0..-2].reverse.split("").map { |e| e.to_i }
+    case opcode
+    when 99
+      @exited = true
+      return true
+    when 1
+      resolve(3)
+      @program[check(3)] = resolve(1) + resolve(2)
+      @pointer += 4
+    when 2
+      resolve(3)
+      @program[check(3)] = resolve(1) * resolve(2)
+      @pointer += 4
+    when 3
+      @program[check(1)] = @input_channel.receive.to_i64
+      @pointer += 2
+    when 4
+      @last_out = resolve(1)
+      @output_channel.send(resolve(1))
+      @pointer += 2
+    when 5
+      p1 = resolve(1)
+      p2 = resolve(2)
+      if p1 != 0
+        @pointer = p2
+      else
+        @pointer += 3
+      end
+    when 6
+      p1 = resolve(1)
+      p2 = resolve(2)
+      if p1 == 0
+        @pointer = p2
+      else
+        @pointer += 3
+      end
+    when 7
+      p1 = resolve(1)
+      p2 = resolve(2)
+      p3 = check(3)
+      @program[p3] = (p1 < p2) ? 1_i64 : 0_i64
+      @pointer += 4
+    when 8
+      p1 = resolve(1)
+      p2 = resolve(2)
+      p3 = check(3)
+      @program[p3] = (p1 == p2) ? 1_i64 : 0_i64
+      @pointer += 4
+    when 9
+      p1 = resolve(1)
+      @relative_pos += p1
+      @pointer += 2
+    else
+      puts "stuck on #{@pointer} with instruction #{instruction}"
+    end
+    return false
   end
 
   def mode(modes, loc)
