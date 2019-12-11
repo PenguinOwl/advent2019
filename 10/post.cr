@@ -1,4 +1,5 @@
 #! /usr/bin/crystal
+require "./pre.cr"
 
 data = File.read("input.txt")
 
@@ -12,7 +13,7 @@ array.each_with_index do |e, r|
   end
 end
 
-i = {22, 19}
+i = run(data)[0]
 others = astriods.dup
 others.delete i
 angles = {} of Tuple(Int32, Int32) => Array(Tuple(Int32, Int32))

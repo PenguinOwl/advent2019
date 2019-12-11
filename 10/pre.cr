@@ -3,6 +3,7 @@ require "../intcode"
 
 data = File.read("input.txt")
 
+def run(data)
 array = data.split("\n").map { |e| e.split("") }
 astriods = [] of Tuple(Int32, Int32)
 counts = {} of Tuple(Int32, Int32) => Int32
@@ -26,4 +27,7 @@ astriods.each do |i|
   counts[i] = angles.size
 end
 
-puts counts.max_by { |i, e| e }
+return counts.max_by { |i, e| e }
+end
+
+puts run(data)
