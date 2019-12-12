@@ -33,15 +33,12 @@ end
 
 class Intcode
   property pointer
-  property outputs
-  property inputs
   property input_channel
   property output_channel
   property last_out
   property exited
   property relative_pos
-
-  @program : Array(Int64)
+  property program : Array(Int64)
 
   def initialize(program : Array(Int64))
     @pointer = 0_i64

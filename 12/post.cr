@@ -33,13 +33,14 @@ tally = [] of UInt64
   loop do
     step bodies
     hash = bodies.hash
-    if hash == seen[0]? # seen.includes? hash
+    if hash == seen[0]?
       break
     else
       seen << hash
     end
     count += 1u64
   end
+  puts i
   tally << count
 end
 
