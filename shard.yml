@@ -1,0 +1,19 @@
+name: intcode
+version: 0.1.0
+
+authors:
+  - PenguinOwl <henryjboles@gmail.com>
+
+# description: |
+#   Short description of advent
+
+# dependencies:
+#   pg:
+#     github: will/crystal-pg
+#     version: "~> 0.5"
+
+# development_dependencies:
+#   webmock:
+#     github: manastech/webmock.cr
+
+# license: MIT
