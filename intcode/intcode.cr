@@ -37,6 +37,7 @@ class Intcode
   property output_channel
   property last_out
   property exited
+  property waiting
   property relative_pos
   property program : Array(Int64)
 
@@ -47,6 +48,7 @@ class Intcode
     @output_channel = Channel(Int64).new
     @last_out = 0_i64
     @exited = false
+    @waiting = false
     @relative_pos = 0_i64
   end
 
@@ -75,7 +77,9 @@ class Intcode
       @program[check(3)] = resolve(1) * resolve(2)
       @pointer += 4
     when 3
+      @waiting = true
       @program[check(1)] = @input_channel.receive.to_i64
+      @waiting = false
       @pointer += 2
     when 4
       @last_out = resolve(1)
