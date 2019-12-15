@@ -1,5 +1,5 @@
 #! /usr/bin/crystal
-require "../intcode"
+require "../../intcode"
 
 data = File.read("input.txt")
 
