@@ -45,34 +45,6 @@ loop do
   break if output == 2
 
   direction = rand(4)
-
-  # bounds = grid.keys.transpose
-  # xoffset = bounds[0].min
-  # yoffset = bounds[1].min
-  # xcap = bounds[0].max
-  # ycap = bounds[1].max
-  #
-  # final = Array(Array(Tile)).new(1 + ycap - yoffset) { Array(Tile).new(1 + xcap - xoffset, Tile.new(1)) }
-  #
-  # grid.each do |k, v|
-  #   final[k[1] - yoffset][k[0] - xoffset] = v
-  # end
-
-  # final[y - yoffset][x - xoffset] = Tile::BOT
-  #
-  # final.reverse.each do |line|
-  #   line.each do |tile|
-  #     if tile == Tile::WALL
-  #       print "█"
-  #     elsif tile == Tile::BOT
-  #       print "#"
-  #     else
-  #       print " "
-  #     end
-  #   end
-  #   print "\n"
-  # end
-
 end
 
 bounds = grid.keys.transpose
