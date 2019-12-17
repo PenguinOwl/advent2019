@@ -5,8 +5,14 @@ macro check(x)
   when 1
     @pointer+{{x}}
   when 2
+    while nil == @program[@program[@pointer+{{x}}]+@relative_pos]?
+      @program << 0
+    end
     @program[@pointer+{{x}}]+@relative_pos
   else
+    while nil == @program[@program[@pointer+{{x}}]]?
+      @program << 0
+    end
     @program[@pointer+{{x}}]
   end
 end
