@@ -61,7 +61,6 @@ spawn do
   until ascii_input.empty?
     intcode.input_channel.send(ascii_input.shift.ord.to_i64)
     Fiber.yield
-    puts input
   end
 end
 
